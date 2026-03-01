@@ -1,0 +1,40 @@
+# IntelliJ IDEA
+.idea
+
+# Backend
+backend/.gradle
+backend/build/
+backend/!gradle/wrapper/gradle-wrapper.jar
+backend/!**/src/main/**/build/
+backend/!**/src/test/**/build/
+backend/.apt_generated
+backend/.classpath
+backend/.factorypath
+backend/.project
+backend/.settings
+backend/.springBeans
+backend/.sts4-cache
+backend/bin/
+backend/!**/src/main/**/bin/
+backend/!**/src/test/**/bin/
+backend/*.iws
+backend/*.iml
+backend/*.ipr
+backend/out/
+backend/!**/src/main/**/out/
+backend/!**/src/test/**/out/
+
+### NetBeans ###
+backend/nbproject/private/
+backend/nbbuild/
+backend/dist/
+backend/nbdist/
+backend/.nb-gradle/
+
+
+# Frontend
+frontend/node_modules
+frontend/.next/
+frontend/next-env.d.ts
+
+frontend/.env*
