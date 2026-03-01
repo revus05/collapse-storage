@@ -89,3 +89,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .text-trim-both {
+    text-box-trim: trim-both;
+  }
+}

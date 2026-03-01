@@ -17,14 +17,14 @@ export const ProductsList: FC<ProductsListProps> = ({ products }) => {
         <Link
           href={`${paths.products}/${product.uuid}`}
           key={product.uuid}
-          className="flex gap-4"
+          className="flex gap-4 border rounded-lg bg-white/10 overflow-hidden"
         >
           <Image
             src={product.images[0]}
             alt={product.title}
             width={400}
             height={400}
-            className="w-fit h-32 object-cover rounded-t"
+            className="w-fit h-32 object-cover"
           />
           <div className="p-4">
             <h3 className="text-xl font-semibold">{product.title}</h3>
