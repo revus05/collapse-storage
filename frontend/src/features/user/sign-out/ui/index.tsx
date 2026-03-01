@@ -2,16 +2,20 @@
 
 import { signOut, useSignOutUserMutation } from "entity/user";
 import { LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useAppDispatch } from "shared/lib/hooks";
+import { paths } from "shared/navigation/paths";
 import { Button } from "shared/ui/button";
 
 export const SignOutButton = () => {
   const [signOutQuery] = useSignOutUserMutation();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const handleSignOut = async () => {
     await signOutQuery();
     dispatch(signOut());
+    router.push(paths.signIn);
   };
 
   return (

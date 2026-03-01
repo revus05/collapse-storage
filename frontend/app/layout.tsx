@@ -23,7 +23,7 @@ export default async function RootLayout({
   const preloadedState = await preloadState();
   return (
     <html lang="en">
-      <body className={`${roboto.variable} antialiased min-h-screen`}>
+      <body className={`${roboto.variable} antialiased min-h-screen flex`}>
         <Providers preloadedState={preloadedState}>{children}</Providers>
       </body>
     </html>
