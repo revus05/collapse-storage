@@ -17,7 +17,7 @@ export const useSignInSubmit = () => {
         const res = await signInUser(data).unwrap();
         if (res?.data) {
           dispatch(signIn(res.data));
-          router.push(paths.home);
+          router.push(paths.orders);
         }
       } catch (error) {
         console.error(error);

@@ -2,14 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type SignInUserRequestDTO = {
+export type UploadFileRequestDTO = {
     /**
-     * Email address
+     * Файл для загрузки
      */
-    email: string;
-    /**
-     * User password
-     */
-    password: string;
+    file: Blob;
 };
 

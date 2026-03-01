@@ -3,20 +3,21 @@
 /* tslint:disable */
 /* eslint-disable */
 export type SignUpUserRequestDTO = {
-  /**
-   * FirstName
-   */
-  firstName: string;
-  /**
-   * LastName
-   */
-  lastName: string;
-  /**
-   * Email address
-   */
-  email: string;
-  /**
-   * User password
-   */
-  password: string;
+    /**
+     * FirstName
+     */
+    firstName: string;
+    /**
+     * LastName
+     */
+    lastName: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * User password
+     */
+    password: string;
 };
+

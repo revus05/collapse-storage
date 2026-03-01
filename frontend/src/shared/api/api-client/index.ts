@@ -3,6 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type { SignInUserRequestDTO } from "./models/SignInUserRequestDTO";
-export type { SignUpUserRequestDTO } from "./models/SignUpUserRequestDTO";
-export type { UserDTO } from "./models/UserDTO";
+export type { ProductDTO } from './models/ProductDTO';
+export type { ProductRequestDTO } from './models/ProductRequestDTO';
+export type { SignInUserRequestDTO } from './models/SignInUserRequestDTO';
+export type { SignUpUserRequestDTO } from './models/SignUpUserRequestDTO';
+export type { UploadFileRequestDTO } from './models/UploadFileRequestDTO';
+export type { UploadFileResponseDTO } from './models/UploadFileResponseDTO';
+export type { UserDTO } from './models/UserDTO';

@@ -25,7 +25,7 @@ const HomeLayout: FC<HomeLayoutType> = async ({ children }) => {
         {children}
       </div>
       <div className={"h-19.25"}>
-        <Navigation />
+        <Navigation user={user} />
       </div>
     </main>
   );
