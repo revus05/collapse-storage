@@ -1,6 +1,6 @@
 package com.collapse.collapsestorage.dto.product;
 
-import com.collapse.collapsestorage.dto.material.MaterialDTO;
+import com.collapse.collapsestorage.dto.productmaterial.ProductMaterialDTO;
 import com.collapse.collapsestorage.entity.Product;
 import com.collapse.collapsestorage.enums.Color;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,7 +30,7 @@ public class ProductDTO {
     private List<Color> outsideColors;
 
     @Schema(description = "Materials", requiredMode = Schema.RequiredMode.REQUIRED)
-    private List<MaterialDTO> materials;
+    private List<ProductMaterialDTO> materials;
 
     @Schema(description = "Creation timestamp", type = "string", format = "date-time", requiredMode = Schema.RequiredMode.REQUIRED)
     private Instant createdAt;
@@ -44,7 +44,7 @@ public class ProductDTO {
         this.title = product.getTitle();
         this.insideColors = product.getInsideColors();
         this.outsideColors = product.getOutsideColors();
-        this.materials = product.getMaterials().stream().map(MaterialDTO::new).toList();
+        this.materials = product.getProductMaterials().stream().map(ProductMaterialDTO::new).toList();
         this.createdAt = product.getCreatedAt();
         this.updatedAt = product.getUpdatedAt();
     }

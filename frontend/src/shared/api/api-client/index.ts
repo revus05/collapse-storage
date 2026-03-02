@@ -3,9 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export type { CreateProductMaterialRequestDTO } from './models/CreateProductMaterialRequestDTO';
 export type { MaterialDTO } from './models/MaterialDTO';
 export type { MaterialRequestDTO } from './models/MaterialRequestDTO';
 export type { ProductDTO } from './models/ProductDTO';
+export type { ProductMaterialDTO } from './models/ProductMaterialDTO';
+export type { ProductMaterialRequestDTO } from './models/ProductMaterialRequestDTO';
 export type { ProductRequestDTO } from './models/ProductRequestDTO';
 export type { SignInUserRequestDTO } from './models/SignInUserRequestDTO';
 export type { SignUpUserRequestDTO } from './models/SignUpUserRequestDTO';

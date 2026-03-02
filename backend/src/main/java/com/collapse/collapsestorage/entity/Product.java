@@ -36,19 +36,8 @@ public class Product {
     @Column(nullable = false)
     private List<Color> outsideColors;
 
-    @ManyToMany
-    @JoinTable(
-        name = "product_materials",
-        joinColumns = @JoinColumn(
-            name = "product_uuid",
-            referencedColumnName = "uuid"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "material_uuid",
-            referencedColumnName = "uuid"
-        )
-    )
-    private List<Material> materials = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductMaterial> productMaterials = new ArrayList<>();
 
     @CreatedDate
     private Instant createdAt;

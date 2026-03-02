@@ -1,8 +1,11 @@
 package com.collapse.collapsestorage.dto.product;
 
+import com.collapse.collapsestorage.dto.productmaterial.CreateProductMaterialRequestDTO;
 import com.collapse.collapsestorage.enums.Color;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +31,8 @@ public class ProductRequestDTO {
     @NotNull
     private List<Color> outsideColors;
 
-    private List<String> materialUuids;
+    @Schema(description = "Список материалов с количеством и цветом", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty
+    @Valid
+    private List<CreateProductMaterialRequestDTO> materials = new ArrayList<>();
 }

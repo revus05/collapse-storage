@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CreateProductMaterialRequestDTO } from './CreateProductMaterialRequestDTO';
 export type ProductRequestDTO = {
     /**
      * Список изображений
@@ -19,6 +20,9 @@ export type ProductRequestDTO = {
      * Цвет снаружи
      */
     outsideColors: Array<'RED' | 'GRAPHITE' | 'GREEN' | 'VIOLET' | 'ORANGE' | 'DARK_RED' | 'BLACK' | 'CYAN' | 'PINK' | 'WHITE' | 'LIME' | 'YELLOW'>;
-    materialUuids?: Array<string>;
+    /**
+     * Список материалов с количеством и цветом
+     */
+    materials: Array<CreateProductMaterialRequestDTO>;
 };
 

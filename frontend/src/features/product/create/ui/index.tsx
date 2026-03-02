@@ -1,8 +1,9 @@
 "use client";
 
+import { useGetAllMaterialsQuery } from "entity/material";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-import { Controller } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import { colors } from "shared/constants";
 import { Button } from "shared/ui/button";
 import {
@@ -16,6 +17,13 @@ import {
 import { Field, FieldError, FieldLabel } from "shared/ui/field";
 import { Input } from "shared/ui/input";
 import { MultiSelect } from "shared/ui/multiselect";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "shared/ui/select";
 import { Textarea } from "shared/ui/textarea";
 import { useCreateProductForm } from "../model/useCreateProductForm";
 import { useCreateProductSubmit } from "../model/useCreateProductSubmit";
@@ -31,6 +39,17 @@ export const CreateProductForm = () => {
     formState: { errors },
     control,
   } = useCreateProductForm();
+  const { data: materialsResponse } = useGetAllMaterialsQuery();
+  const materials = materialsResponse?.data ?? [];
+
+  const {
+    fields,
+    append,
+    remove: removeMaterialLink,
+  } = useFieldArray({
+    control,
+    name: "materials",
+  });
 
   const images = watch("images");
 
@@ -51,7 +70,7 @@ export const CreateProductForm = () => {
             Добавить продукт
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-full">
+        <DialogContent className="w-full max-h-[90svh] overflow-y-scroll">
           <DialogHeader>
             <DialogTitle>Новый продукт</DialogTitle>
             <DialogDescription>
@@ -121,6 +140,130 @@ export const CreateProductForm = () => {
                 className="max-h-64"
               />
               <FieldError>{errors.description?.message}</FieldError>
+            </Field>
+
+            <Field>
+              <FieldLabel>Связи с материалами</FieldLabel>
+              <div className="flex flex-col gap-3">
+                {fields.map((field, index) => (
+                  <div
+                    key={field.id}
+                    className="rounded-md border border-input p-3 flex flex-col gap-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">
+                        Связь #{index + 1}
+                      </span>
+                      {index > 0 && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => removeMaterialLink(index)}
+                        >
+                          Удалить
+                        </Button>
+                      )}
+                    </div>
+
+                    <Field>
+                      <FieldLabel>Материал</FieldLabel>
+                      <Controller
+                        control={control}
+                        name={`materials.${index}.materialUuid`}
+                        render={({ field: selectField }) => (
+                          <Select
+                            value={selectField.value}
+                            onValueChange={selectField.onChange}
+                          >
+                            <SelectTrigger
+                              aria-invalid={
+                                !!errors.materials?.[index]?.materialUuid
+                                  ?.message
+                              }
+                              className="w-full"
+                            >
+                              <SelectValue placeholder="Выберите материал" />
+                            </SelectTrigger>
+                            <SelectContent position="popper" align="end">
+                              {materials.map((material) => (
+                                <SelectItem
+                                  key={material.uuid}
+                                  value={material.uuid}
+                                >
+                                  {material.title}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                      <FieldError>
+                        {errors.materials?.[index]?.materialUuid?.message}
+                      </FieldError>
+                    </Field>
+
+                    <Field>
+                      <FieldLabel>Количество материала</FieldLabel>
+                      <Input
+                        {...register(`materials.${index}.quantity`)}
+                        placeholder="1"
+                        aria-invalid={
+                          !!errors.materials?.[index]?.quantity?.message
+                        }
+                      />
+                      <FieldError>
+                        {errors.materials?.[index]?.quantity?.message}
+                      </FieldError>
+                    </Field>
+
+                    <Field>
+                      <FieldLabel>Цвет материала</FieldLabel>
+                      <Controller
+                        control={control}
+                        name={`materials.${index}.color`}
+                        render={({ field: selectField }) => (
+                          <Select
+                            value={selectField.value}
+                            onValueChange={selectField.onChange}
+                          >
+                            <SelectTrigger
+                              aria-invalid={
+                                !!errors.materials?.[index]?.color?.message
+                              }
+                              className="w-full"
+                            >
+                              <SelectValue placeholder="Выберите цвет" />
+                            </SelectTrigger>
+                            <SelectContent position="popper" align="end">
+                              {Object.entries(colors).map(([value, label]) => (
+                                <SelectItem key={value} value={value}>
+                                  {label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        )}
+                      />
+                      <FieldError>
+                        {errors.materials?.[index]?.color?.message}
+                      </FieldError>
+                    </Field>
+                  </div>
+                ))}
+
+                <FieldError>{errors.materials?.message}</FieldError>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() =>
+                    append({ materialUuid: "", quantity: "1", color: "BLACK" })
+                  }
+                >
+                  Добавить еще связь
+                </Button>
+              </div>
             </Field>
 
             <Field>

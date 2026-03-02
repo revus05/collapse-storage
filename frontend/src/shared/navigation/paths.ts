@@ -1,6 +1,6 @@
 export const paths = {
   orders: "/",
-  storage: "/storage",
+  materials: "/materials",
   products: "/products",
   profile: "/profile",
   signIn: "/sign-in",

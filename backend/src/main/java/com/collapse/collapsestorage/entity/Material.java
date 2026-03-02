@@ -40,8 +40,8 @@ public class Material {
 
     private double quantityMinimumLevel;
 
-    @ManyToMany(mappedBy = "materials")
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "material")
+    private List<ProductMaterial> productMaterials = new ArrayList<>();
 
     @CreatedDate
     private Instant createdAt;

@@ -14,5 +14,6 @@ export const useCreateProductForm = () =>
       insideColors: [],
       outsideColors: [],
       images: [],
+      materials: [{ materialUuid: "", quantity: "1", color: "BLACK" }],
     },
   });

@@ -36,22 +36,22 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
         <span className="text-white/70">Заказы</span>
       </Link>
       <Link
-        href={paths.storage}
+        href={paths.materials}
         className={cn(
           "flex flex-col gap-1 items-center rounded-lg px-2 py-1.5",
-          pathname === paths.storage &&
+          pathname === paths.materials &&
             "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border py-1.25",
         )}
       >
         <ShelvingUnit className="stroke-white/70" />
-        <span className="text-white/70">Склад</span>
+        <span className="text-white/70">Материалы</span>
       </Link>
       {isAdmin && (
         <Link
           href={paths.products}
           className={cn(
             "flex flex-col gap-1 items-center rounded-lg px-2 py-1.5",
-            pathname === paths.products &&
+            pathname?.includes(paths.products) &&
               "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border py-1.25",
           )}
         >

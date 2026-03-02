@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { MaterialDTO } from './MaterialDTO';
+import type { ProductMaterialDTO } from './ProductMaterialDTO';
 export type ProductDTO = {
     /**
      * Product uuid
@@ -27,7 +27,7 @@ export type ProductDTO = {
     /**
      * Materials
      */
-    materials: Array<MaterialDTO>;
+    materials: Array<ProductMaterialDTO>;
     /**
      * Creation timestamp
      */

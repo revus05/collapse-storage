@@ -9,7 +9,17 @@ export const useCreateProductSubmit = () => {
   return {
     onSubmit: async (data: ProductFormData) => {
       try {
-        await createProduct(data).unwrap();
+        await createProduct({
+          title: data.title,
+          insideColors: data.insideColors,
+          outsideColors: data.outsideColors,
+          images: data.images,
+          materials: data.materials.map((material) => ({
+            materialUuid: material.materialUuid,
+            quantity: Number(material.quantity),
+            color: material.color,
+          })),
+        }).unwrap();
       } catch (e) {
         console.error("Ошибка сохранения продукта", e);
       }
