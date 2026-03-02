@@ -1,7 +1,8 @@
 package com.collapse.collapsestorage.entity;
 
-import com.collapse.collapsestorage.dto.product.ProductRequestDTO;
+import com.collapse.collapsestorage.dto.material.MaterialRequestDTO;
 import com.collapse.collapsestorage.enums.Color;
+import com.collapse.collapsestorage.enums.Unit;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,37 +19,29 @@ import java.util.List;
 @Hidden
 @Getter
 @Setter
-@Table(name = "products")
+@Table(name = "materials")
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
 
-    private List<String> images;
-
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    private List<Color> insideColors;
+    private Unit unit;
 
     @Column(nullable = false)
-    private List<Color> outsideColors;
+    private List<Color> availableColors;
 
-    @ManyToMany
-    @JoinTable(
-        name = "product_materials",
-        joinColumns = @JoinColumn(
-            name = "product_uuid",
-            referencedColumnName = "uuid"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "material_uuid",
-            referencedColumnName = "uuid"
-        )
-    )
-    private List<Material> materials = new ArrayList<>();
+    private double quantityInStock;
+
+    private double quantityReserved;
+
+    private double quantityMinimumLevel;
+
+    @ManyToMany(mappedBy = "materials")
+    private List<Product> products = new ArrayList<>();
 
     @CreatedDate
     private Instant createdAt;
@@ -56,12 +49,14 @@ public class Product {
     @LastModifiedDate
     private Instant updatedAt;
 
-    public Product() {}
+    public Material() {}
 
-    public Product(ProductRequestDTO dto) {
-        this.images = dto.getImages();
+    public Material(MaterialRequestDTO dto) {
         this.title = dto.getTitle();
-        this.insideColors = dto.getInsideColors();
-        this.outsideColors = dto.getOutsideColors();
+        this.unit = dto.getUnit();
+        this.availableColors = dto.getAvailableColors();
+        this.quantityInStock = dto.getQuantityInStock();
+        this.quantityReserved = dto.getQuantityReserved();
+        this.quantityMinimumLevel = dto.getQuantityMinimumLevel();
     }
 }

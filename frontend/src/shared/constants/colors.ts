@@ -14,6 +14,7 @@ export const colors = {
 } as const;
 
 export type Colors = keyof typeof colors;
+export const colorValues = Object.keys(colors) as Array<Colors>;
 
 export const colorsHex: Record<Colors, string> = {
   RED: "#8B3A3A",
@@ -29,5 +30,3 @@ export const colorsHex: Record<Colors, string> = {
   LIME: "#8FA65A",
   YELLOW: "#C2A24D",
 };
-
-export const colorValues = Object.keys(colors) as Array<Colors>;

@@ -1,5 +1,6 @@
 "use client";
 
+import { Plus } from "lucide-react";
 import Image from "next/image";
 import { Controller } from "react-hook-form";
 import { colors } from "shared/constants";
@@ -45,7 +46,10 @@ export const CreateProductForm = () => {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">Добавить продукт</Button>
+          <Button variant="outline">
+            <Plus />
+            Добавить продукт
+          </Button>
         </DialogTrigger>
         <DialogContent className="w-full">
           <DialogHeader>

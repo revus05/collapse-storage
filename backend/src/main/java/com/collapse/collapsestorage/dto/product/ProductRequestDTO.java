@@ -8,12 +8,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 public class ProductRequestDTO {
     @Schema(description = "Список изображений")
-    private ArrayList<String> images = new ArrayList<>();
+    private List<String> images = new ArrayList<>();
 
     @Schema(description = "Название продукта", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank
@@ -21,9 +22,11 @@ public class ProductRequestDTO {
 
     @Schema(description = "Цвет внутри", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull
-    private ArrayList<Color> insideColors;
+    private List<Color> insideColors;
 
     @Schema(description = "Цвет снаружи", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull
-    private ArrayList<Color> outsideColors;
+    private List<Color> outsideColors;
+
+    private List<String> materialUuids;
 }

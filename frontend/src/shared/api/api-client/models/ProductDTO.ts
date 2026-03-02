@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { MaterialDTO } from './MaterialDTO';
 export type ProductDTO = {
     /**
      * Product uuid
@@ -23,6 +24,10 @@ export type ProductDTO = {
      * Outside color
      */
     outsideColors: Array<'RED' | 'GRAPHITE' | 'GREEN' | 'VIOLET' | 'ORANGE' | 'DARK_RED' | 'BLACK' | 'CYAN' | 'PINK' | 'WHITE' | 'LIME' | 'YELLOW'>;
+    /**
+     * Materials
+     */
+    materials: Array<MaterialDTO>;
     /**
      * Creation timestamp
      */

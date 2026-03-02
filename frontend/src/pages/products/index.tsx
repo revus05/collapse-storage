@@ -1,6 +1,6 @@
 import { makeStore } from "app/store";
 import { productApi } from "entity/product";
-import { CreateProductForm } from "features/products/create";
+import { CreateProductForm } from "features/product/create";
 import { withHomeLayout } from "widgets/layouts/home";
 import { ProductsList } from "widgets/product/products-list";
 

@@ -2,7 +2,9 @@ package com.collapse.collapsestorage.service;
 
 import com.collapse.collapsestorage.dto.product.ProductDTO;
 import com.collapse.collapsestorage.dto.product.ProductRequestDTO;
+import com.collapse.collapsestorage.entity.Material;
 import com.collapse.collapsestorage.entity.Product;
+import com.collapse.collapsestorage.repository.MaterialRepository;
 import com.collapse.collapsestorage.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+    private final MaterialRepository materialRepository;
 
     public ProductDTO createProduct(ProductRequestDTO dto) {
         Product product = new Product(dto);
+
+        List<Material> foundMaterials = materialRepository.findAllByUuidIn(dto.getMaterialUuids());
+        product.setMaterials(foundMaterials);
+
         return new ProductDTO(productRepository.save(product));
     }
 
