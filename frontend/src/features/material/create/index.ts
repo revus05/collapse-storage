@@ -1,1 +1,1 @@
-export { CreateProductForm } from "./ui";
+export { CreateMaterialForm } from "./ui";

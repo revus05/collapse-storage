@@ -4,4 +4,5 @@ export {
   useDeleteProductMutation,
   useGetAllProductsQuery,
   useGetProductByIdQuery,
+  useUpdateProductMutation,
 } from "./api";

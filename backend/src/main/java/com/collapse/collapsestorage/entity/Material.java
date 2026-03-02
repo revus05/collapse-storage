@@ -43,6 +43,9 @@ public class Material {
     @OneToMany(mappedBy = "material")
     private List<ProductMaterial> productMaterials = new ArrayList<>();
 
+    @OneToMany(mappedBy = "material")
+    private List<MaterialRestockRequest> restockRequests = new ArrayList<>();
+
     @CreatedDate
     private Instant createdAt;
 

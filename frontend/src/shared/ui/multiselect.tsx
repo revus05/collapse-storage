@@ -16,7 +16,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "shared/ui/popover";
 
 interface MultiSelectProps extends ComponentProps<typeof Button> {
-  values: { label: string; value: string }[];
+  values: { label: string; value: string; colorHex?: string }[];
   selected: string[];
   onValuesChangeAction: (value: string[]) => void;
 }
@@ -52,7 +52,17 @@ export const MultiSelect: FC<MultiSelectProps> = ({
             {selected.map((value) => {
               const item = values.find((v) => v.value === value);
               return (
-                <Badge key={value} variant="secondary">
+                <Badge
+                  key={value}
+                  variant="secondary"
+                  className="inline-flex items-center gap-2"
+                >
+                  {item?.colorHex && (
+                    <span
+                      className="size-3 rounded-full border"
+                      style={{ background: item.colorHex }}
+                    />
+                  )}
                   {item?.label}
                 </Badge>
               );
@@ -67,20 +77,24 @@ export const MultiSelect: FC<MultiSelectProps> = ({
           <CommandInput placeholder="Поиск..." />
           <CommandEmpty>Ничего не найдено.</CommandEmpty>
           <CommandGroup>
-            {values.map((framework) => (
+            {values.map((item) => (
               <CommandItem
-                key={framework.value}
-                onSelect={() => toggleValue(framework.value)}
+                key={item.value}
+                onSelect={() => toggleValue(item.value)}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    selected.includes(framework.value)
-                      ? "opacity-100"
-                      : "opacity-0",
+                    selected.includes(item.value) ? "opacity-100" : "opacity-0",
                   )}
                 />
-                {framework.label}
+                {item.colorHex && (
+                  <span
+                    className="size-3 rounded-full border"
+                    style={{ background: item.colorHex }}
+                  />
+                )}
+                {item.label}
               </CommandItem>
             ))}
           </CommandGroup>

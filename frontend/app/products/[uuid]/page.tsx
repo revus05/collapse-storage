@@ -1,1 +1,1 @@
-export { default } from "pages/products/[uuid]";
+export { default } from "pages/product-page";

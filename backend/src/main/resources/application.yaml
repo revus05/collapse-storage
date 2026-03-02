@@ -27,3 +27,9 @@ management:
     web:
       cors:
         allowed-origins: ${CORS_ORIGIN}
+
+telegram:
+  bot:
+    token: ${TELEGRAM_BOT_TOKEN}
+    username: collapseby_bot
+    chat-id: ${TELEGRAM_CHAT_ID}

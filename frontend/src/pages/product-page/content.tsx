@@ -1,34 +1,40 @@
-import { makeStore } from "app/store";
-import { productApi } from "entity/product";
+"use client";
+
+import { useGetProductByIdQuery } from "entity/product";
+import { EditProductForm } from "features/product/edit";
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import { colors, colorsHex } from "shared/constants/colors";
 import { units } from "shared/constants/unit";
-import { withHomeLayout } from "widgets/layouts/home";
 
-type ProductPageProps = {
-  params: { uuid: string } | Promise<{ uuid: string }>;
+type ProductPageContentProps = {
+  uuid: string;
+  isAdmin: boolean;
 };
 
-const ProductPage = async ({ params }: ProductPageProps) => {
-  const { uuid } = await Promise.resolve(params);
-  const store = makeStore();
+export const ProductPageContent = ({ uuid, isAdmin }: ProductPageContentProps) => {
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetProductByIdQuery(uuid);
 
-  store.dispatch(productApi.endpoints.getProductById.initiate(uuid));
-
-  await Promise.all(store.dispatch(productApi.util.getRunningQueriesThunk()));
-
-  const state = store.getState();
-  const response = productApi.endpoints.getProductById.select(uuid)(state)?.data;
-  const product = response?.data;
-
-  if (!product) {
-    notFound();
+  if (isLoading || isFetching) {
+    return <div className="rounded-xl border p-4 text-white/70">Загрузка продукта...</div>;
   }
+
+  if (isError || !response?.data) {
+    return <div className="rounded-xl border p-4 text-red-300">Продукт не найден</div>;
+  }
+
+  const product = response.data;
 
   return (
     <div className="w-full flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">{product.title}</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold">{product.title}</h1>
+        {isAdmin && <EditProductForm product={product} />}
+      </div>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {product.images.map((image) => (
@@ -48,7 +54,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-white/70">Снаружи:</span>
-            {product.outsideColors.map((color) => (
+            {product.outsideColors?.map((color) => (
               <span
                 key={`outside-${color}`}
                 className="inline-flex items-center gap-2 rounded-full border px-2 py-1 text-sm"
@@ -63,7 +69,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
           </div>
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-white/70">Внутри:</span>
-            {product.insideColors.map((color) => (
+            {product.insideColors?.map((color) => (
               <span
                 key={`inside-${color}`}
                 className="inline-flex items-center gap-2 rounded-full border px-2 py-1 text-sm"
@@ -106,4 +112,3 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   );
 };
 
-export default withHomeLayout(ProductPage);

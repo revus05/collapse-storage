@@ -7,7 +7,7 @@ export const useCreateMaterialSubmit = () => {
   const [createMaterial, createState] = useCreateMaterialMutation();
 
   return {
-    onSubmit: async (data: MaterialFormData) => {
+    onSubmit: async (data: MaterialFormData, onSuccess?: () => void) => {
       try {
         await createMaterial({
           ...data,
@@ -15,6 +15,7 @@ export const useCreateMaterialSubmit = () => {
           quantityReserved: +data.quantityReserved,
           quantityMinimumLevel: +data.quantityMinimumLevel,
         }).unwrap();
+        onSuccess?.();
       } catch (e) {
         console.error("Ошибка сохранения материала", e);
       }

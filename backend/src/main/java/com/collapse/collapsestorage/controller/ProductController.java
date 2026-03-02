@@ -8,6 +8,7 @@ import com.collapse.collapsestorage.swagger.product.CreateProductOperation;
 import com.collapse.collapsestorage.swagger.product.DeleteProductOperation;
 import com.collapse.collapsestorage.swagger.product.GetAllProductsOperation;
 import com.collapse.collapsestorage.swagger.product.GetProductByIdOperation;
+import com.collapse.collapsestorage.swagger.product.UpdateProductOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,13 @@ public class ProductController {
     public Response getProductById(@PathVariable String uuid) {
         ProductDTO product = productService.getProductById(uuid);
         return new Response("Продукт найден", HttpStatus.OK, product);
+    }
+
+    @UpdateProductOperation
+    @PutMapping("/{uuid}")
+    public Response updateProduct(@PathVariable String uuid, @Valid @RequestBody ProductRequestDTO dto) {
+        ProductDTO product = productService.updateProduct(uuid, dto);
+        return new Response("Продукт обновлен", HttpStatus.OK, product);
     }
 
     @DeleteProductOperation

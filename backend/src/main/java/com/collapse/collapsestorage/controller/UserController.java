@@ -3,6 +3,7 @@ package com.collapse.collapsestorage.controller;
 import com.collapse.collapsestorage.dto.response.Response;
 import com.collapse.collapsestorage.dto.user.SignInUserRequestDTO;
 import com.collapse.collapsestorage.dto.user.SignUpUserRequestDTO;
+import com.collapse.collapsestorage.dto.user.UpdateUserRequestDTO;
 import com.collapse.collapsestorage.dto.user.UserDTO;
 import com.collapse.collapsestorage.service.JwtService;
 import com.collapse.collapsestorage.service.UserService;
@@ -10,6 +11,7 @@ import com.collapse.collapsestorage.swagger.user.GetMeOperation;
 import com.collapse.collapsestorage.swagger.user.SignInOperation;
 import com.collapse.collapsestorage.swagger.user.SignOutOperation;
 import com.collapse.collapsestorage.swagger.user.SignUpOperation;
+import com.collapse.collapsestorage.swagger.user.UpdateMeOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -58,6 +60,18 @@ public class UserController {
         assert auth != null;
         UserDTO loggedUser = userService.getMe(((UserDetails) Objects.requireNonNull(auth.getPrincipal())).getUsername());
         return new Response("Пользователь успешно авторизован", HttpStatus.OK, loggedUser);
+    }
+
+    @UpdateMeOperation
+    @PutMapping("/me")
+    public Response updateMe(@Valid @RequestBody UpdateUserRequestDTO requestDTO) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        assert auth != null;
+        UserDTO updatedUser = userService.updateMe(
+                ((UserDetails) Objects.requireNonNull(auth.getPrincipal())).getUsername(),
+                requestDTO
+        );
+        return new Response("Профиль успешно обновлен", HttpStatus.OK, updatedUser);
     }
 
 

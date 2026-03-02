@@ -1,8 +1,12 @@
-import { HomePage } from "pages/home/ui";
+import { getMeOnServer } from "entity/user/lib";
+import { HomeContent } from "./content";
 import { withHomeLayout } from "widgets/layouts/home";
 
 const HomeServerPage = async () => {
-  return <HomePage />;
+  const me = await getMeOnServer();
+  const isAdmin = me?.role === "ADMIN";
+
+  return <HomeContent isAdmin={isAdmin} />;
 };
 
 export default withHomeLayout(HomeServerPage);

@@ -21,10 +21,17 @@ const HomeLayout: FC<HomeLayoutType> = async ({ children }) => {
       <div className={"h-12.25 relative"}>
         <Header />
       </div>
-      <div className={"2xl:w-360 w-full 2xl:px-0 px-2 mx-auto flex gap-8 grow"}>
-        {children}
+      <div
+        className={
+          "2xl:w-360 w-full 2xl:px-0 px-2 mx-auto flex gap-8 grow pb-20 md:pb-0"
+        }
+      >
+        <aside className="hidden md:block w-48">
+          <Navigation user={user} />
+        </aside>
+        <div className="grow">{children}</div>
       </div>
-      <div className={"h-19.25"}>
+      <div className={"h-19.25 md:hidden"}>
         <Navigation user={user} />
       </div>
     </main>

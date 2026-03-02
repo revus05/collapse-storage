@@ -10,7 +10,6 @@ export const useCreateProductForm = () =>
     mode: "onSubmit",
     defaultValues: {
       title: "",
-      description: "",
       insideColors: [],
       outsideColors: [],
       images: [],

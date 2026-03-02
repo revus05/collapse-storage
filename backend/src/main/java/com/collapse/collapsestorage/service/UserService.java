@@ -2,6 +2,7 @@ package com.collapse.collapsestorage.service;
 
 import com.collapse.collapsestorage.dto.user.SignInUserRequestDTO;
 import com.collapse.collapsestorage.dto.user.SignUpUserRequestDTO;
+import com.collapse.collapsestorage.dto.user.UpdateUserRequestDTO;
 import com.collapse.collapsestorage.dto.user.UserDTO;
 import com.collapse.collapsestorage.entity.User;
 import com.collapse.collapsestorage.exception.UnauthorizedException;
@@ -47,5 +48,16 @@ public class UserService {
             .orElseThrow(() -> new UnauthorizedException("Нет пользователя для такого uuid"));
 
         return new UserDTO(foundUser);
+    }
+
+    public UserDTO updateMe(String userUuid, UpdateUserRequestDTO requestDTO) throws UnauthorizedException {
+        User foundUser = userRepository.findById(userUuid)
+                .orElseThrow(() -> new UnauthorizedException("Нет пользователя для такого uuid"));
+
+        foundUser.setFirstName(requestDTO.getFirstName());
+        foundUser.setLastName(requestDTO.getLastName());
+        foundUser.setImage(requestDTO.getImage());
+
+        return new UserDTO(userRepository.save(foundUser));
     }
 }

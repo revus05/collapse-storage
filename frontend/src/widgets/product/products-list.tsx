@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
 import type { ProductDTO } from "shared/api";
-import { colorsHex } from "shared/constants/colors";
+import { colorsHex } from "shared/constants";
 import { units } from "shared/constants/unit";
 import { paths } from "shared/navigation/paths";
 
@@ -37,7 +37,9 @@ export const ProductsList: FC<ProductsListProps> = ({ products }) => {
               <div className="flex flex-col gap-1">
                 {visibleMaterials.map((material) => (
                   <div key={material.uuid} className="flex gap-2 items-center">
-                    <span className="text-white/70">{material.materialTitle}</span>
+                    <span className="text-white/70">
+                      {material.materialTitle}
+                    </span>
                     <span>-</span>
                     <span>
                       {material.quantity}{" "}

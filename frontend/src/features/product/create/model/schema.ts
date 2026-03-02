@@ -17,7 +17,6 @@ const materialLinkSchema = z.object({
 
 export const productSchema = z.object({
   title: z.string().trim().nonempty("Название обязательно"),
-  description: z.string().trim().nonempty("Описание обязательно"),
 
   insideColors: z
     .array(z.enum(colorValues))

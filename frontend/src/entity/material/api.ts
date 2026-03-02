@@ -16,13 +16,23 @@ const materialApi = createApi({
         url: "",
         method: "GET",
       }),
-      providesTags: ["materials"],
+      providesTags: (result) =>
+        result?.data
+          ? [
+              { type: "materials", id: "LIST" },
+              ...result.data.map((material) => ({
+                type: "materials" as const,
+                id: material.uuid,
+              })),
+            ]
+          : [{ type: "materials", id: "LIST" }],
     }),
     getMaterialById: builder.query<ApiResponse<MaterialDTO>, string>({
       query: (uuid) => ({
         url: `/${uuid}`,
         method: "GET",
       }),
+      providesTags: (_result, _error, uuid) => [{ type: "materials", id: uuid }],
     }),
     createMaterial: builder.mutation<
       ApiResponse<MaterialDTO>,
@@ -33,14 +43,17 @@ const materialApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["materials"],
+      invalidatesTags: [{ type: "materials", id: "LIST" }],
     }),
     deleteMaterial: builder.mutation<ApiResponse<void>, string>({
       query: (uuid) => ({
         url: `/${uuid}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["materials"],
+      invalidatesTags: (_result, _error, uuid) => [
+        { type: "materials", id: "LIST" },
+        { type: "materials", id: uuid },
+      ],
     }),
   }),
 });

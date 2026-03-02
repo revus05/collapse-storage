@@ -39,6 +39,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductMaterial> productMaterials = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product")
+    private List<OrderProduct> orderProducts = new ArrayList<>();
+
     @CreatedDate
     private Instant createdAt;
 

@@ -1,8 +1,9 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
-import { colors } from "shared/constants";
+import { colors, colorsHex } from "shared/constants";
 import { units } from "shared/constants/unit";
 import { Button } from "shared/ui/button";
 import {
@@ -27,37 +28,56 @@ import { useCreateMaterialForm } from "../model/useCreateMaterialForm";
 import { useCreateMaterialSubmit } from "../model/useCreateMaterialSubmit";
 
 export const CreateMaterialForm = () => {
+  const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     control,
   } = useCreateMaterialForm();
 
   const { onSubmit, isLoading } = useCreateMaterialSubmit();
 
-  console.log(errors);
+  const resetForm = () => {
+    reset({
+      title: "",
+      unit: "PIECE",
+      availableColors: [],
+      quantityInStock: "0",
+      quantityMinimumLevel: "0",
+      quantityReserved: "0",
+    });
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (!nextOpen) {
+      resetForm();
+    }
+  };
 
   return (
-    <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">
-            <Plus />
-            Добавить материал
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="w-full">
-          <DialogHeader>
-            <DialogTitle>Новый материал</DialogTitle>
-            <DialogDescription>
-              Заполните поля формы чтобы создать новый материал
-            </DialogDescription>
-          </DialogHeader>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
-          >
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          <Plus />
+          Добавить материал
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="w-full">
+        <DialogHeader>
+          <DialogTitle>Новый материал</DialogTitle>
+          <DialogDescription>
+            Заполните поля формы чтобы создать новый материал
+          </DialogDescription>
+        </DialogHeader>
+        <form
+          onSubmit={handleSubmit(async (data) => {
+            await onSubmit(data, () => handleOpenChange(false));
+          })}
+          className="flex flex-col gap-4"
+        >
             <Field>
               <FieldLabel>Название</FieldLabel>
               <Input
@@ -105,6 +125,7 @@ export const CreateMaterialForm = () => {
                     values={Object.entries(colors).map(([value, label]) => ({
                       label,
                       value,
+                      colorHex: colorsHex[value as keyof typeof colorsHex],
                     }))}
                     selected={field.value}
                     onValuesChangeAction={field.onChange}
@@ -148,9 +169,8 @@ export const CreateMaterialForm = () => {
             <Button type="submit" disabled={isLoading}>
               Добавить
             </Button>
-          </form>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 };

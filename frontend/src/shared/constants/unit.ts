@@ -1,8 +1,8 @@
 export const units = {
-  METER: "Метр",
-  SQUARE_METER: "Квадратный метр",
-  PIECE: "Штука",
-  KILOGRAM: "КилограмМ",
+  METER: "м.",
+  SQUARE_METER: "кв. м.",
+  PIECE: "шт.",
+  KILOGRAM: "кг.",
 } as const;
 
 export type Units = keyof typeof units;
