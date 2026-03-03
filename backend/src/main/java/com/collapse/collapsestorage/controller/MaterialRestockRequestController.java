@@ -8,6 +8,8 @@ import com.collapse.collapsestorage.enums.Role;
 import com.collapse.collapsestorage.exception.UnauthorizedException;
 import com.collapse.collapsestorage.service.MaterialRestockRequestService;
 import com.collapse.collapsestorage.service.UserService;
+import com.collapse.collapsestorage.swagger.materialrestockrequest.CreateMaterialRestockRequestOperation;
+import com.collapse.collapsestorage.swagger.materialrestockrequest.GetAllMaterialRestockRequestsOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class MaterialRestockRequestController {
     private final MaterialRestockRequestService materialRestockRequestService;
     private final UserService userService;
 
+    @CreateMaterialRestockRequestOperation
     @PostMapping
     public Response createRequest(@Valid @RequestBody MaterialRestockRequestRequestDTO dto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -37,6 +40,7 @@ public class MaterialRestockRequestController {
         return new Response("Заявка на пополнение создана", HttpStatus.CREATED, request);
     }
 
+    @GetAllMaterialRestockRequestsOperation
     @GetMapping
     public Response getAllRequests() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

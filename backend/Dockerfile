@@ -1,27 +1,24 @@
 # ---------- Stage 1: Build ----------
-FROM maven:3.9.4-eclipse-temurin-20 AS build
+FROM eclipse-temurin:25-jdk-alpine AS build
 
 WORKDIR /app
 
-COPY pom.xml .
-RUN mvn dependency:go-offline
-
+COPY gradlew gradlew.bat build.gradle settings.gradle ./
+COPY gradle ./gradle
 COPY src ./src
 
-RUN mvn spotless:apply
-
-RUN mvn clean package -DskipTests
+RUN sed -i 's/\r$//' gradlew && chmod +x gradlew
+RUN ./gradlew bootJar -x test --no-daemon
 
 # ---------- Stage 2: Run ----------
-FROM eclipse-temurin:20-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/build/libs/*.jar app.jar
 
 ENV JAVA_OPTS=""
 
 EXPOSE 8080
-EXPOSE 9090
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]

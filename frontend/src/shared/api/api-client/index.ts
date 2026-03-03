@@ -7,6 +7,7 @@ export type { CreateOrderProductRequestDTO } from './models/CreateOrderProductRe
 export type { CreateProductMaterialRequestDTO } from './models/CreateProductMaterialRequestDTO';
 export type { MaterialDTO } from './models/MaterialDTO';
 export type { MaterialRequestDTO } from './models/MaterialRequestDTO';
+export type { MaterialRestockRequestDTO } from './models/MaterialRestockRequestDTO';
 export type { MaterialRestockRequestRequestDTO } from './models/MaterialRestockRequestRequestDTO';
 export type { OrderDTO } from './models/OrderDTO';
 export type { OrderProductDTO } from './models/OrderProductDTO';

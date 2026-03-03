@@ -38,3 +38,8 @@ frontend/.next/
 frontend/next-env.d.ts
 
 frontend/.env*
+
+
+# env
+**/.env
+**/.env.*
