@@ -23,7 +23,7 @@ export const SignInForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-bg-neutral-primary/70 flex w-100 flex-col gap-6 rounded-2xl border p-8 shadow-sm backdrop-blur-[32px]"
+      className="bg-bg-neutral-primary/70 flex w-full max-w-100 flex-col gap-6 rounded-2xl border p-8 shadow-sm backdrop-blur-[32px]"
     >
       <h2 className="text-xl font-semibold">Вход</h2>
       <div className="flex flex-col gap-6">

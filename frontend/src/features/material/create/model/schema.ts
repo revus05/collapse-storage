@@ -8,9 +8,6 @@ const quantitySchema = z
   .refine((val) => !Number.isNaN(Number(val)), {
     message: "Количество должно быть числом",
   })
-  .refine((val) => val !== "0", {
-    message: "Количество не может быть 0",
-  })
   .refine((val) => Number(val) >= 0, {
     message: "Количество не может быть отрицательным",
   });
@@ -23,7 +20,9 @@ export const materialSchema = z.object({
     .array(z.enum(colorValues))
     .min(1, "Выберите хотя бы один цвет"),
 
-  quantityInStock: quantitySchema,
+  quantityInStock: quantitySchema.refine((val) => val !== "0", {
+    message: "Количество не может быть 0",
+  }),
   quantityReserved: quantitySchema,
   quantityMinimumLevel: quantitySchema,
 });

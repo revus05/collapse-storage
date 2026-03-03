@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "app/providers";
 import { preloadState } from "entity/user";
 import type { ReactNode } from "react";
+import { Toaster } from "shared/ui/sonner";
 
 const roboto = Roboto({
   variable: "--font-roboto-sans",
@@ -24,7 +25,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} antialiased min-h-screen flex`}>
-        <Providers preloadedState={preloadedState}>{children}</Providers>
+        <Providers preloadedState={preloadedState}>
+          {children}
+          <Toaster position="top-right" />
+        </Providers>
       </body>
     </html>
   );

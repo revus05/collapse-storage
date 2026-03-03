@@ -1,12 +1,12 @@
-import { OrderProductPageContent } from "./content";
 import { withHomeLayout } from "widgets/layouts/home";
+import { OrderProductPageContent } from "./content";
 
 type OrderProductPageProps = {
   params: { uuid: string } | Promise<{ uuid: string }>;
 };
 
 const OrderProductPage = async ({ params }: OrderProductPageProps) => {
-  const { uuid } = await Promise.resolve(params);
+  const { uuid } = await params;
   return <OrderProductPageContent uuid={uuid} />;
 };
 

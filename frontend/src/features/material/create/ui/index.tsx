@@ -78,97 +78,97 @@ export const CreateMaterialForm = () => {
           })}
           className="flex flex-col gap-4"
         >
-            <Field>
-              <FieldLabel>Название</FieldLabel>
-              <Input
-                {...register("title")}
-                placeholder={"Ткань джинсовая"}
-                aria-invalid={!!errors.title?.message}
-              />
-              <FieldError>{errors.title?.message}</FieldError>
-            </Field>
+          <Field>
+            <FieldLabel>Название</FieldLabel>
+            <Input
+              {...register("title")}
+              placeholder={"Ткань джинсовая"}
+              aria-invalid={!!errors.title?.message}
+            />
+            <FieldError>{errors.title?.message}</FieldError>
+          </Field>
 
-            <Field>
-              <FieldLabel>Единицы измерения</FieldLabel>
-              <Controller
-                control={control}
-                name="unit"
-                render={({ field }) => (
-                  <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    aria-invalid={!!errors.availableColors?.message}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={units.METER} />
-                    </SelectTrigger>
-                    <SelectContent position="popper" align="end">
-                      {Object.entries(units).map(([value, label]) => (
-                        <SelectItem value={value} key={value}>
-                          {label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-              <FieldError>{errors.title?.message}</FieldError>
-            </Field>
+          <Field>
+            <FieldLabel>Единицы измерения</FieldLabel>
+            <Controller
+              control={control}
+              name="unit"
+              render={({ field }) => (
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  aria-invalid={!!errors.unit?.message}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={units.METER} />
+                  </SelectTrigger>
+                  <SelectContent position="popper" align="end">
+                    {Object.entries(units).map(([value, label]) => (
+                      <SelectItem value={value} key={value}>
+                        {label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <FieldError>{errors.unit?.message}</FieldError>
+          </Field>
 
-            <Field>
-              <FieldLabel>Доступные цвета</FieldLabel>
-              <Controller
-                control={control}
-                name="availableColors"
-                render={({ field }) => (
-                  <MultiSelect
-                    values={Object.entries(colors).map(([value, label]) => ({
-                      label,
-                      value,
-                      colorHex: colorsHex[value as keyof typeof colorsHex],
-                    }))}
-                    selected={field.value}
-                    onValuesChangeAction={field.onChange}
-                    aria-invalid={!!errors.availableColors?.message}
-                  />
-                )}
-              />
-              <FieldError>{errors.availableColors?.message}</FieldError>
-            </Field>
+          <Field>
+            <FieldLabel>Доступные цвета</FieldLabel>
+            <Controller
+              control={control}
+              name="availableColors"
+              render={({ field }) => (
+                <MultiSelect
+                  values={Object.entries(colors).map(([value, label]) => ({
+                    label,
+                    value,
+                    colorHex: colorsHex[value as keyof typeof colorsHex],
+                  }))}
+                  selected={field.value}
+                  onValuesChangeAction={field.onChange}
+                  aria-invalid={!!errors.availableColors?.message}
+                />
+              )}
+            />
+            <FieldError>{errors.availableColors?.message}</FieldError>
+          </Field>
 
-            <Field>
-              <FieldLabel>В наличии</FieldLabel>
-              <Input
-                {...register("quantityInStock")}
-                placeholder={"10"}
-                aria-invalid={!!errors.quantityInStock?.message}
-              />
-              <FieldError>{errors.quantityInStock?.message}</FieldError>
-            </Field>
+          <Field>
+            <FieldLabel>В наличии</FieldLabel>
+            <Input
+              {...register("quantityInStock")}
+              placeholder={"10"}
+              aria-invalid={!!errors.quantityInStock?.message}
+            />
+            <FieldError>{errors.quantityInStock?.message}</FieldError>
+          </Field>
 
-            <Field>
-              <FieldLabel>Зарезервировано заказами</FieldLabel>
-              <Input
-                {...register("quantityReserved")}
-                placeholder={"10"}
-                aria-invalid={!!errors.quantityReserved?.message}
-              />
-              <FieldError>{errors.quantityReserved?.message}</FieldError>
-            </Field>
+          <Field>
+            <FieldLabel>Зарезервировано заказами</FieldLabel>
+            <Input
+              {...register("quantityReserved")}
+              placeholder={"10"}
+              aria-invalid={!!errors.quantityReserved?.message}
+            />
+            <FieldError>{errors.quantityReserved?.message}</FieldError>
+          </Field>
 
-            <Field>
-              <FieldLabel>Минимальное количество</FieldLabel>
-              <Input
-                {...register("quantityMinimumLevel")}
-                placeholder={"10"}
-                aria-invalid={!!errors.quantityMinimumLevel?.message}
-              />
-              <FieldError>{errors.quantityMinimumLevel?.message}</FieldError>
-            </Field>
+          <Field>
+            <FieldLabel>Минимальное количество</FieldLabel>
+            <Input
+              {...register("quantityMinimumLevel")}
+              placeholder={"10"}
+              aria-invalid={!!errors.quantityMinimumLevel?.message}
+            />
+            <FieldError>{errors.quantityMinimumLevel?.message}</FieldError>
+          </Field>
 
-            <Button type="submit" disabled={isLoading}>
-              Добавить
-            </Button>
+          <Button type="submit" disabled={isLoading}>
+            Добавить
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

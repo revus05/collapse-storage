@@ -1,11 +1,10 @@
 "use client";
 
-import {
-  useCreateMaterialRestockRequestMutation,
-} from "entity/material-restock-request";
 import { materialApi } from "entity/material";
+import { useCreateMaterialRestockRequestMutation } from "entity/material-restock-request";
 import { useUpdateOrderProductStatusMutation } from "entity/order";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import type { OrderProductDTO } from "shared/api";
 import { colors, colorsHex, productionStatuses, units } from "shared/constants";
 import { useAppDispatch } from "shared/lib";
@@ -18,7 +17,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "shared/ui/select";
-import { useState } from "react";
 
 type ProductionActionsProps = {
   orderProduct: OrderProductDTO;
@@ -28,8 +26,9 @@ export const ProductionActions = ({ orderProduct }: ProductionActionsProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [status, setStatus] = useState(orderProduct.status);
-  const [usePlannedAmounts, setUsePlannedAmounts] = useState(true);
-  const [customAmounts, setCustomAmounts] = useState<Record<string, number>>({});
+  const [customAmounts, setCustomAmounts] = useState<Record<string, number>>(
+    {},
+  );
   const [updateStatus, { isLoading: isUpdatingStatus }] =
     useUpdateOrderProductStatusMutation();
   const [createRestockRequest, { isLoading: isCreatingRequest }] =
@@ -40,9 +39,7 @@ export const ProductionActions = ({ orderProduct }: ProductionActionsProps) => {
       status === "DONE"
         ? orderProduct.product.materials.map((material) => ({
             productMaterialUuid: material.uuid,
-            quantity: usePlannedAmounts
-              ? material.quantity
-              : customAmounts[material.uuid] ?? material.quantity,
+            quantity: customAmounts[material.uuid] ?? material.quantity,
           }))
         : undefined;
 
@@ -78,7 +75,10 @@ export const ProductionActions = ({ orderProduct }: ProductionActionsProps) => {
       <div className="rounded-xl border p-4 flex flex-col gap-3">
         <h2 className="font-semibold">Статус изготовления</h2>
         <div className="flex items-center gap-2">
-          <Select value={status} onValueChange={(value) => setStatus(value as typeof status)}>
+          <Select
+            value={status}
+            onValueChange={(value) => setStatus(value as typeof status)}
+          >
             <SelectTrigger className="w-full max-w-56">
               <SelectValue />
             </SelectTrigger>
@@ -98,51 +98,34 @@ export const ProductionActions = ({ orderProduct }: ProductionActionsProps) => {
         {status === "DONE" && (
           <div className="rounded-lg border p-3 flex flex-col gap-3">
             <span className="text-sm text-white/80">
-              Использовано плановое количество материалов?
+              Подтвердите количество материалов
             </span>
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                size="sm"
-                variant={usePlannedAmounts ? "default" : "outline"}
-                onClick={() => setUsePlannedAmounts(true)}
-              >
-                Да
-              </Button>
-              <Button
-                type="button"
-                size="sm"
-                variant={!usePlannedAmounts ? "default" : "outline"}
-                onClick={() => setUsePlannedAmounts(false)}
-              >
-                Нет, укажу вручную
-              </Button>
-            </div>
 
-            {!usePlannedAmounts && (
-              <div className="flex flex-col gap-2">
-                {orderProduct.product.materials.map((material) => (
-                  <label key={material.uuid} className="flex items-center justify-between gap-3">
-                    <span className="text-sm text-white/80">
-                      {material.materialTitle} ({units[material.materialUnit]})
-                    </span>
-                    <Input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={customAmounts[material.uuid] ?? material.quantity}
-                      onChange={(event) =>
-                        setCustomAmounts((previous) => ({
-                          ...previous,
-                          [material.uuid]: Number(event.target.value),
-                        }))
-                      }
-                      className="max-w-32"
-                    />
-                  </label>
-                ))}
-              </div>
-            )}
+            <div className="flex flex-col gap-2">
+              {orderProduct.product.materials.map((material) => (
+                <div
+                  key={material.uuid}
+                  className="flex items-center justify-between gap-3"
+                >
+                  <span className="text-sm text-white/80">
+                    {material.materialTitle} ({units[material.materialUnit]})
+                  </span>
+                  <Input
+                    type="number"
+                    min={0}
+                    step="0.01"
+                    value={customAmounts[material.uuid] ?? material.quantity}
+                    onChange={(event) =>
+                      setCustomAmounts((previous) => ({
+                        ...previous,
+                        [material.uuid]: Number(event.target.value),
+                      }))
+                    }
+                    className="max-w-32"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

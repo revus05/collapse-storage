@@ -44,7 +44,7 @@ export const MultiSelect: FC<MultiSelectProps> = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-75 justify-between"
+          className="w-75 justify-between min-h-8 h-fit py-1"
           {...props}
         >
           <div className="flex gap-1 flex-wrap">
@@ -55,7 +55,7 @@ export const MultiSelect: FC<MultiSelectProps> = ({
                 <Badge
                   key={value}
                   variant="secondary"
-                  className="inline-flex items-center gap-2"
+                  className="inline-flex items-center gap-2 border border-tertiary"
                 >
                   {item?.colorHex && (
                     <span

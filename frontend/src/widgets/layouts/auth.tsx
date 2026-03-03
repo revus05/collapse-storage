@@ -6,7 +6,7 @@ type AuthLayoutType = {
 };
 
 const AuthLayout: FC<AuthLayoutType> = async ({ children }) => {
-  return <main>{children}</main>;
+  return <main className="grow">{children}</main>;
 };
 
 export const withAuthLayout = (Component: React.FC) => {

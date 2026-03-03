@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ClipboardList,
-  List,
-  ShelvingUnit,
-  SquareChartGantt,
-  User,
-} from "lucide-react";
+import { List, ShelvingUnit, SquareChartGantt, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,7 +22,7 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
     <nav
       className={cn(
         "md:border-t border md:rounded-2xl md:gap-1 gap-0 rounded-none grid md:grid-cols-1! grid-cols-3 px-2 py-1.5 md:static fixed bottom-0 left-0 right-0 z-1 backdrop-blur-2xl",
-        isAdmin && "grid-cols-5",
+        isAdmin && "grid-cols-4",
       )}
     >
       <Link
@@ -64,19 +58,6 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
         >
           <SquareChartGantt className="stroke-white/70" />
           <span className="text-white/70">Продукты</span>
-        </Link>
-      )}
-      {isAdmin && (
-        <Link
-          href={paths.adminMaterialRequests}
-          className={cn(
-            "flex flex-col md:flex-row gap-1 items-center rounded-lg px-2 py-1.5 border border-transparent",
-            pathname?.startsWith(paths.adminMaterialRequests) &&
-              "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border-border md:py-1.5 py-1.25",
-          )}
-        >
-          <ClipboardList className="stroke-white/70" />
-          <span className="text-white/70">Заявки</span>
         </Link>
       )}
       <Link

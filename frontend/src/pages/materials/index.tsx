@@ -1,4 +1,7 @@
 import { CreateMaterialForm } from "features/material/create/ui";
+import Link from "next/link";
+import { paths } from "shared/navigation/paths";
+import { Button } from "shared/ui/button";
 import { withHomeLayout } from "widgets/layouts/home";
 import { MaterialsList } from "widgets/material/materials-list";
 
@@ -9,6 +12,9 @@ export const MaterialsPage = async () => {
         <h1 className="font-bold text-2xl">Материалы</h1>
         <CreateMaterialForm />
       </div>
+      <Button asChild variant="outline" className="w-fit">
+        <Link href={paths.adminMaterialRequests}>Заявки на пополнение</Link>
+      </Button>
       <MaterialsList />
     </div>
   );
