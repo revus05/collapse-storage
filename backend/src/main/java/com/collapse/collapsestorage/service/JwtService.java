@@ -90,26 +90,28 @@ public class JwtService {
     }
 
     private String extractDomain(String origin) {
+        if (origin == null || origin.isEmpty()) {
+            return null;
+        }
+
         try {
             URI uri = new URI(origin);
             String host = uri.getHost();
+            if (host == null) return null;
 
-            if (host == null) {
-                return null;
+            String[] parts = host.split("\\.");
+            int length = parts.length;
+
+            if (length < 2) {
+                return host;
             }
 
-            if (host.startsWith("www.")) {
-                host = host.substring(4);
-            }
+            String rootDomain = parts[length - 2] + "." + parts[length - 1];
 
-            if (host.startsWith("api.")) {
-                host = host.substring(4);
-            }
+            return "." + rootDomain;
 
-            return host;
         } catch (URISyntaxException e) {
-            System.err.println("Invalid CORS_ORIGIN: " + origin);
+            return null;
         }
-        return null;
     }
 }
