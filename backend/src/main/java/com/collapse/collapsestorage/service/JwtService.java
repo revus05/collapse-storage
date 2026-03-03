@@ -106,9 +106,7 @@ public class JwtService {
                 return host;
             }
 
-            String rootDomain = parts[length - 2] + "." + parts[length - 1];
-
-            return "." + rootDomain;
+            return parts[length - 2] + "." + parts[length - 1];
 
         } catch (URISyntaxException e) {
             return null;
