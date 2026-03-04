@@ -28,6 +28,7 @@ public class TelegramNotificationService {
 
             telegramClient.execute(message);
         } catch (TelegramApiException e) {
+            System.out.println(e.getMessage());
             System.out.println("Не удалось отправить уведомление в Telegram");
         }
     }
