@@ -48,10 +48,9 @@ public class MaterialRestockRequestService {
     private String buildTelegramMessage(MaterialRestockRequest request) {
         return "<b>Новая заявка на пополнение материала</b>\n" +
                 "Материал: " + request.getMaterial().getTitle() + "\n" +
-                "Заказ: " + request.getOrderProduct().getOrder().getUuid() + "\n" +
+                "Заказ: #" + request.getOrderProduct().getOrder().getUuid().substring(0, 8) + "\n" +
                 "Продукт: " + request.getOrderProduct().getProduct().getTitle() + "\n" +
-                "Позиция заказа: " + request.getOrderProduct().getUuid() + "\n" +
-                "Пользователь: " + request.getRequestedByUserUuid();
+                "Пользователь: #" + request.getRequestedByUserUuid().substring(0, 8);
     }
 
     private MaterialRestockRequestDTO toDto(MaterialRestockRequest request) {

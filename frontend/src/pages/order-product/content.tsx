@@ -8,7 +8,9 @@ type OrderProductPageContentProps = {
   uuid: string;
 };
 
-export const OrderProductPageContent = ({ uuid }: OrderProductPageContentProps) => {
+export const OrderProductPageContent = ({
+  uuid,
+}: OrderProductPageContentProps) => {
   const {
     data: response,
     isLoading,
@@ -17,11 +19,19 @@ export const OrderProductPageContent = ({ uuid }: OrderProductPageContentProps) 
   } = useGetOrderProductByIdQuery(uuid);
 
   if (isLoading || isFetching) {
-    return <div className="rounded-xl border p-4 text-white/70">Загрузка позиции заказа...</div>;
+    return (
+      <div className="rounded-xl border p-4 text-white/70">
+        Загрузка позиции заказа...
+      </div>
+    );
   }
 
   if (isError || !response?.data) {
-    return <div className="rounded-xl border p-4 text-red-300">Позиция заказа не найдена</div>;
+    return (
+      <div className="rounded-xl border p-4 text-red-300">
+        Позиция заказа не найдена
+      </div>
+    );
   }
 
   const orderProduct = response.data;
@@ -41,9 +51,15 @@ export const OrderProductPageContent = ({ uuid }: OrderProductPageContentProps) 
           />
         )}
         <div className="flex flex-col gap-1">
-          <span className="font-semibold text-lg">{orderProduct.product.title}</span>
-          <span className="text-white/70">Заказ: {orderProduct.orderUuid}</span>
-          <span className="text-white/70">Позиция: {orderProduct.uuid}</span>
+          <span className="font-semibold text-lg">
+            {orderProduct.product.title}
+          </span>
+          <span className="text-white/70">
+            Заказ: #{orderProduct.orderUuid.substring(0, 8)}
+          </span>
+          <span className="text-white/70">
+            Позиция: #{orderProduct.uuid.substring(0, 8)}
+          </span>
         </div>
       </div>
 
@@ -51,4 +67,3 @@ export const OrderProductPageContent = ({ uuid }: OrderProductPageContentProps) 
     </div>
   );
 };
-
