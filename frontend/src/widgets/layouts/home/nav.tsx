@@ -3,8 +3,8 @@
 import { List, ShelvingUnit, SquareChartGantt, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import type { FC } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { type FC, useEffect, useRef, useState } from "react";
 import type { UserDTO } from "shared/api";
 import { cn } from "shared/lib";
 import { paths } from "shared/navigation/paths";
@@ -17,6 +17,44 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
   const isAdmin = user.role === "ADMIN";
 
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [isFromOrdersTransition, setIsFromOrdersTransition] = useState(false);
+  const previousPathnameRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!pathname) {
+      return;
+    }
+
+    const previousPathname = previousPathnameRef.current;
+    const wasOrdersPath =
+      previousPathname === paths.orders ||
+      Boolean(previousPathname?.startsWith("/orders/"));
+    const isCurrentOrdersPath =
+      pathname === paths.orders || pathname.startsWith("/orders/");
+
+    setIsFromOrdersTransition(wasOrdersPath && !isCurrentOrdersPath);
+    previousPathnameRef.current = pathname;
+  }, [pathname]);
+
+  const isFromOrdersFlow =
+    searchParams?.get("from") === "orders" || isFromOrdersTransition;
+
+  const isPathActive = (targetPath: string) => {
+    if (!pathname) {
+      return false;
+    }
+
+    if (isFromOrdersFlow) {
+      return targetPath === paths.orders;
+    }
+
+    if (targetPath === paths.orders) {
+      return pathname === paths.orders || pathname.startsWith("/orders/");
+    }
+
+    return pathname === targetPath || pathname.startsWith(`${targetPath}/`);
+  };
 
   return (
     <nav
@@ -29,7 +67,7 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
         href={paths.orders}
         className={cn(
           "flex flex-col md:flex-row gap-1 items-center rounded-lg px-2 py-1.5 border border-transparent",
-          pathname === paths.orders &&
+          isPathActive(paths.orders) &&
             "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border-border md:py-1.5 py-1.25",
         )}
       >
@@ -40,7 +78,7 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
         href={paths.materials}
         className={cn(
           "flex flex-col md:flex-row gap-1 items-center rounded-lg px-2 py-1.5 border border-transparent",
-          pathname?.includes(paths.materials) &&
+          isPathActive(paths.materials) &&
             "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border-border md:py-1.5 py-1.25",
         )}
       >
@@ -52,7 +90,7 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
           href={paths.products}
           className={cn(
             "flex flex-col md:flex-row gap-1 items-center rounded-lg px-2 py-1.5 border border-transparent",
-            pathname?.includes(paths.products) &&
+            isPathActive(paths.products) &&
               "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border-border md:py-1.5 py-1.25",
           )}
         >
@@ -64,7 +102,7 @@ export const Navigation: FC<NavigationProps> = ({ user }) => {
         href={paths.profile}
         className={cn(
           "flex flex-col md:flex-row gap-1 items-center rounded-lg px-2 py-1.5 border border-transparent",
-          pathname === paths.profile &&
+          isPathActive(paths.profile) &&
             "[&_svg]:stroke-white [&_span]:text-white bg-white/10 border-border md:py-1.5 py-1.25",
         )}
       >

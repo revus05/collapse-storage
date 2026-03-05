@@ -10,9 +10,13 @@ import { paths } from "shared/navigation/paths";
 
 type OrdersListProps = {
   orders: OrderDTO[];
+  emptyText?: string;
 };
 
-export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
+export const OrdersList: FC<OrdersListProps> = ({
+  orders,
+  emptyText = "Заказов пока нет",
+}) => {
   const formatOrderDate = (value?: string) => {
     if (!value) {
       return "Дата не указана";
@@ -28,9 +32,7 @@ export const OrdersList: FC<OrdersListProps> = ({ orders }) => {
 
   if (orders.length === 0) {
     return (
-      <div className="rounded-xl border p-4 text-white/70">
-        Заказов пока нет
-      </div>
+      <div className="rounded-xl border p-4 text-white/70">{emptyText}</div>
     );
   }
 
